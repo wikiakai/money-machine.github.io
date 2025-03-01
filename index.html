@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Open Link Without Moving Tab</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+      }
+      a {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: white;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        margin-bottom: 10px;
+      }
+      a:hover {
+        background-color: #0056b3;
+      }
+      a.disabled {
+        background-color: gray;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      href="https://www.effectiveratecpm.com/qyszu9ib?key=d2631095e677c94c8449218b2aedb31b"
+      id="myLink"
+      >Open Link</a
+    >
+    <p>Click count: <span id="clickCounter">0</span></p>
+    <label for="limiter">Set Limit: </label>
+    <select id="limiter">
+      <option value="50">50</option>
+      <option value="80">80</option>
+      <option value="100">100</option>
+      <option value="120">120</option>
+    </select>
+
+    <script>
+      let counter = 0;
+      let limit = 50; // Default limit
+
+      document
+        .getElementById("limiter")
+        .addEventListener("change", function () {
+          limit = parseInt(this.value, 10);
+        });
+
+      document
+        .getElementById("myLink")
+        .addEventListener("click", function (event) {
+          if (!event.ctrlKey && !event.metaKey) {
+            event.preventDefault(); // Prevent default behavior if Ctrl or Cmd is not pressed
+            const newTab = window.open(this.href, "_blank");
+            if (newTab) {
+              newTab.blur(); // Move focus away from the new tab
+              window.focus(); // Keep focus on the current tab
+            }
+          }
+          counter++;
+          document.getElementById("clickCounter").textContent = counter;
+
+          if (counter >= limit) {
+            document.getElementById("myLink").classList.add("disabled");
+          }
+        });
+    </script>
+  </body>
+</html>
